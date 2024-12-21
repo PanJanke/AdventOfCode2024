@@ -40,7 +40,7 @@ def set_empty_map(array):
     return [['.' for _ in range(width)] for _ in range(height)]
 
 
-def get_atenas(array):
+def get_antenas(array):
     antenas = {}
     for y, row in enumerate(array):
         for x, char in enumerate(row):
@@ -54,12 +54,12 @@ def get_atenas(array):
 with open('../inputs/day8.txt', 'r') as file:
     array = [list(line.strip()) for line in file]
 
-antenas = get_atenas(array)
+antenas = get_antenas(array)
 
 antinodes = find_antinodes(array, antenas)
 
 count = 0
 for row in antinodes:
-    count +=row.count('#')
+    count += row.count('#')
 
 print(count)
