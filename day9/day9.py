@@ -1,19 +1,7 @@
-def find_dots(text):
-    result = []
-    j = 0
-    i = 0
-    while (i < len(text)):
-        if text[i] == '.':
-            while (i + j < len(text)):
-                if text[i + j] != '.':
-                    break
-                j += 1
-            result.append((i, j))
-            i = i + j - 1
-            j = 0
-        i = i + 1
-
-    return result
+def remove_dots(list):
+    while list[len(list) - 1] == '.':
+        list.pop()
+    return list
 
 
 with open('../inputs/day9.txt', "r") as file:
@@ -22,38 +10,30 @@ with open('../inputs/day9.txt', "r") as file:
 length = len(text)
 index = 0
 is_file = True
-memory = ''
+memory = []
 for i in range(0, length):
     if is_file:
         for j in range(0, int(text[i])):
-            memory += str(index)
+            memory.append(index)
         index += 1
         is_file = False
     else:
         for j in range(0, int(text[i])):
-            memory += '.'
+            memory.append('.')
         is_file = True
-memory.rstrip('.')
-print(memory)
 
-gap_list = find_dots(memory)
-print(gap_list)
+index = 0
+memory = remove_dots(memory)
+length = len(memory)
 
-for gap in gap_list:
-    print(gap)
-    l = len(memory)
-    index, size = gap
-    if index + size < l - size:
-        candidate = memory[l - size:l]
+while index < len(memory):
+    if memory[index] == '.':
+        memory[index] = memory[len(memory) - 1]
+        memory.pop()
+        memory = remove_dots(memory)
+    index += 1
 
-
-        candidate = candidate.replace('.', '')
-        reverse = candidate[::-1]
-        num = index+len(reverse)-1
-        memory = memory[0:l - size]
-        l=len(memory)
-        memory = memory[0:index] + reverse + memory[l-num:l]
-
-    print(memory)
-    print(reverse)
-    break
+count = 0
+for i, num in enumerate(memory):
+    count += i * int(num)
+print(count)
