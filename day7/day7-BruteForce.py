@@ -47,6 +47,7 @@ def check_equation(numbers, result):
             # Evaluate the expression
             value = evaluate_left_to_right(perm, ops)
 
+
             if int(value) == int(result):
                 return int(result)
 
